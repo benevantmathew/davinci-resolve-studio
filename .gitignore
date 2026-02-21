@@ -1,1 +1,22 @@
-DaVinci_Resolve_Studio_*
+# vscode
+.vscode
+
+# Arch build directories
+src/
+pkg/
+
+# Built packages
+*.pkg.tar.zst
+*.pkg.tar.xz
+*.pkg.tar.gz
+
+# Package metadata
+*.log
+
+# Resolve zip (large binary, don't commit)
+DaVinci_Resolve_Studio_*_Linux.zip
+# DaVinci_Resolve_Studio_*
+
+# Temporary files
+*.swp
+*~

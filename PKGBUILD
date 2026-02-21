@@ -11,25 +11,23 @@
 
 _pkgname=resolve
 pkgname=davinci-resolve-studio
-pkgver=20.2
+pkgver=20.3
 pkgrel=1
 pkgdesc='Professional A/V post-production software suite from Blackmagic Design. Studio edition, requires license key or license dongle.'
 arch=('x86_64')
 url="https://www.blackmagicdesign.com/support/family/davinci-resolve-and-fusion"
 license=('LicenseRef-Commercial')
-depends=(
-  'glu' 'gtk2' 'libpng12' 'fuse2' 'opencl-driver' 'qt5-x11extras' 'qt5-svg' 'qt5-webengine'
-  'qt5-websockets' 'qt5-quickcontrols2' 'qt5-multimedia' 'libxcrypt-compat' 'xmlsec'
-  'java-runtime' 'ffmpeg4.4' 'gst-plugins-bad-libs' 'python-numpy' 
-  'tbb' 'apr-util' 'luajit' 'libc++' 'libc++abi'
-  )
+depends=('glu' 'gtk2' 'libpng12' 'fuse2' 'opencl-driver' 'qt5-x11extras' 'qt5-svg' 'qt5-webengine'
+         'qt5-websockets' 'qt5-quickcontrols2' 'qt5-multimedia' 'libxcrypt-compat' 'xmlsec'
+         'java-runtime' 'ffmpeg4.4' 'gst-plugins-bad-libs' 'python-numpy'
+         'tbb' 'apr-util' 'luajit' 'libc++' 'libc++abi')
 makedepends=('libarchive' 'xdg-user-dirs' 'patchelf')
 conflicts=('davinci-resolve' 'davinci-resolve-beta' 'davinci-resolve-studio-beta')
 source=("file://DaVinci_Resolve_Studio_${pkgver}_Linux.zip"
         "davinci-control-panels-setup.sh")
 sha256sums=('SKIP'
             'f17236fd68cead727c647bc31404e402922cdd491df5526f4b62364cbef9d3b8')
-install="${pkgname}.install"
+# install="${pkgname}.install"
 options=('!strip')
 
 prepare() {
@@ -58,39 +56,37 @@ prepare() {
   done < <(find "squashfs-root" -type f -print0)
 
   # Prepare list of paths for patchelf
-  _patchelf_paths=(
-    "libs"
-    "libs/plugins/sqldrivers"
-    "libs/plugins/xcbglintegrations"
-    "libs/plugins/imageformats"
-    "libs/plugins/platforms"
-    "libs/Fusion"
-    "plugins"
-    "bin"
-    "BlackmagicRAWSpeedTest/BlackmagicRawAPI"
-    "BlackmagicRAWSpeedTest/plugins/platforms"
-    "BlackmagicRAWSpeedTest/plugins/imageformats"
-    "BlackmagicRAWSpeedTest/plugins/mediaservice"
-    "BlackmagicRAWSpeedTest/plugins/audio"
-    "BlackmagicRAWSpeedTest/plugins/xcbglintegrations"
-    "BlackmagicRAWSpeedTest/plugins/bearer"
-    "BlackmagicRAWPlayer/BlackmagicRawAPI"
-    "BlackmagicRAWPlayer/plugins/mediaservice"
-    "BlackmagicRAWPlayer/plugins/imageformats"
-    "BlackmagicRAWPlayer/plugins/audio"
-    "BlackmagicRAWPlayer/plugins/platforms"
-    "BlackmagicRAWPlayer/plugins/xcbglintegrations"
-    "BlackmagicRAWPlayer/plugins/bearer"
-    "Onboarding/plugins/xcbglintegrations"
-    "Onboarding/plugins/qtwebengine"
-    "Onboarding/plugins/platforms"
-    "Onboarding/plugins/imageformats"
-    "DaVinci Control Panels Setup/plugins/platforms"
-    "DaVinci Control Panels Setup/plugins/imageformats"
-    "DaVinci Control Panels Setup/plugins/bearer"
-    "DaVinci Control Panels Setup/AdminUtility/PlugIns/DaVinciKeyboards"
-    "DaVinci Control Panels Setup/AdminUtility/PlugIns/DaVinciPanels"
-    )
+  _patchelf_paths=("libs"
+                   "libs/plugins/sqldrivers"
+                   "libs/plugins/xcbglintegrations"
+                   "libs/plugins/imageformats"
+                   "libs/plugins/platforms"
+                   "libs/Fusion"
+                   "plugins"
+                   "bin"
+                   "BlackmagicRAWSpeedTest/BlackmagicRawAPI"
+                   "BlackmagicRAWSpeedTest/plugins/platforms"
+                   "BlackmagicRAWSpeedTest/plugins/imageformats"
+                   "BlackmagicRAWSpeedTest/plugins/mediaservice"
+                   "BlackmagicRAWSpeedTest/plugins/audio"
+                   "BlackmagicRAWSpeedTest/plugins/xcbglintegrations"
+                   "BlackmagicRAWSpeedTest/plugins/bearer"
+                   "BlackmagicRAWPlayer/BlackmagicRawAPI"
+                   "BlackmagicRAWPlayer/plugins/mediaservice"
+                   "BlackmagicRAWPlayer/plugins/imageformats"
+                   "BlackmagicRAWPlayer/plugins/audio"
+                   "BlackmagicRAWPlayer/plugins/platforms"
+                   "BlackmagicRAWPlayer/plugins/xcbglintegrations"
+                   "BlackmagicRAWPlayer/plugins/bearer"
+                   "Onboarding/plugins/xcbglintegrations"
+                   "Onboarding/plugins/qtwebengine"
+                   "Onboarding/plugins/platforms"
+                   "Onboarding/plugins/imageformats"
+                   "DaVinci Control Panels Setup/plugins/platforms"
+                   "DaVinci Control Panels Setup/plugins/imageformats"
+                   "DaVinci Control Panels Setup/plugins/bearer"
+                   "DaVinci Control Panels Setup/AdminUtility/PlugIns/DaVinciKeyboards"
+                   "DaVinci Control Panels Setup/AdminUtility/PlugIns/DaVinciPanels")
   for _index in "${!_patchelf_paths[@]}"
   do
     _patchelf_paths[${_index}]="/opt/${_pkgname}/${_patchelf_paths[${_index}]}"
@@ -104,14 +100,10 @@ prepare() {
     sed -i "s|RESOLVE_INSTALL_LOCATION|/opt/${_pkgname}|g" "${_file}"
   done < <(find . -type f '(' -name "*.desktop" -o -name "*.directory" -o -name "*.directory" -o -name "*.menu" ')' -print0)
 
-  rm "squashfs-root/libs/libc++.so.1" \
-    "squashfs-root/libs/libglib-2.0.so.0" \
-    "squashfs-root/libs/libgio-2.0.so.0" \
-    "squashfs-root/libs/libgmodule-2.0.so.0" \
-    "squashfs-root/libs/libc++abi.so.1"
+  rm "squashfs-root/libs/libglib-2.0.so.0" \
+     "squashfs-root/libs/libgio-2.0.so.0" \
+     "squashfs-root/libs/libgmodule-2.0.so.0"
   ln -s "../BlackmagicRAWPlayer/BlackmagicRawAPI" "squashfs-root/bin/"
-  ln -s /usr/lib/libc++.so.1.0 "squashfs-root/libs/libc++.so.1"
-  ln -s /usr/lib/libc++abi.so.1.0 "squashfs-root/libs/libc++abi.so.1"
   ln -s /usr/lib/libglib-2.0.so.0 "squashfs-root/libs/libglib-2.0.so.0"
   ln -s /usr/lib/libgio-2.0.so.0 "squashfs-root/libs/libgio-2.0.so.0"
   ln -s /usr/lib/libgmodule-2.0.so.0 "squashfs-root/libs/libgmodule-2.0.so.0"
@@ -124,13 +116,13 @@ prepare() {
   # Fix desktop files
   sed -i 's#Exec=.*#Exec=davinci-control-panels-setup#' \
     "squashfs-root/share/DaVinciControlPanelsSetup.desktop"
-  sed -i 's#Icon=.*#Icon=davinci-resolve.png#' \
+  sed -i 's#Icon=.*#Icon=davinci-resolve#' \
     "squashfs-root/share/DaVinciResolve.desktop"
-  sed -i 's#Icon=.*#Icon=davinci-resolve-panels-setup.png#' \
+  sed -i 's#Icon=.*#Icon=davinci-resolve-panels-setup#' \
     "squashfs-root/share/DaVinciControlPanelsSetup.desktop"
-  sed -i 's#Icon=.*#Icon=blackmagicraw-player.png#' \
+  sed -i 's#Icon=.*#Icon=blackmagicraw-player#' \
     "squashfs-root/share/blackmagicraw-player.desktop"
-  sed -i 's#Icon=.*#Icon=blackmagicraw-speedtest.png#' \
+  sed -i 's#Icon=.*#Icon=blackmagicraw-speedtest#' \
     "squashfs-root/share/blackmagicraw-speedtest.desktop"
 }
 
@@ -181,4 +173,3 @@ package() {
     "share/etc/udev/rules.d"/{99-BlackmagicDevices.rules,99-ResolveKeyboardHID.rules,99-DavinciPanel.rules}
   popd
 }
-

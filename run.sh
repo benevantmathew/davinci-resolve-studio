@@ -1,5 +1,5 @@
 #!/bin/bash
-version="20.2"
+version="20.3"
 zipfile="DaVinci_Resolve_Studio_${version}_Linux.zip"
 
 # Get the directory of this script
