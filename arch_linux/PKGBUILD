@@ -1,3 +1,4 @@
+#!/bin/bash
 # Maintainer: Muflone http://www.muflone.com/contacts/english/
 # Contributor: Alex S. <shantanna_at_hotmail_dot_com>
 # Contributor: Jonathon Fernyhough <jonathon_at_manjaro_dot_org>
@@ -18,9 +19,9 @@ arch=('x86_64')
 url="https://www.blackmagicdesign.com/support/family/davinci-resolve-and-fusion"
 license=('LicenseRef-Commercial')
 depends=('glu' 'gtk2' 'libpng12' 'fuse2' 'opencl-driver' 'qt5-x11extras' 'qt5-svg' 'qt5-webengine'
-         'qt5-websockets' 'qt5-quickcontrols2' 'qt5-multimedia' 'libxcrypt-compat' 'xmlsec'
-         'java-runtime' 'ffmpeg4.4' 'gst-plugins-bad-libs' 'python-numpy'
-         'tbb' 'apr-util' 'luajit' 'libc++' 'libc++abi')
+          'qt5-websockets' 'qt5-quickcontrols2' 'qt5-multimedia' 'libxcrypt-compat' 'xmlsec'
+          'java-runtime' 'ffmpeg4.4' 'gst-plugins-bad-libs' 'python-numpy'
+          'tbb' 'apr-util' 'luajit' 'libc++' 'libc++abi')
 makedepends=('libarchive' 'xdg-user-dirs' 'patchelf')
 conflicts=('davinci-resolve' 'davinci-resolve-beta' 'davinci-resolve-studio-beta')
 source=("file://DaVinci_Resolve_Studio_${pkgver}_Linux.zip"
@@ -57,36 +58,36 @@ prepare() {
 
   # Prepare list of paths for patchelf
   _patchelf_paths=("libs"
-                   "libs/plugins/sqldrivers"
-                   "libs/plugins/xcbglintegrations"
-                   "libs/plugins/imageformats"
-                   "libs/plugins/platforms"
-                   "libs/Fusion"
-                   "plugins"
-                   "bin"
-                   "BlackmagicRAWSpeedTest/BlackmagicRawAPI"
-                   "BlackmagicRAWSpeedTest/plugins/platforms"
-                   "BlackmagicRAWSpeedTest/plugins/imageformats"
-                   "BlackmagicRAWSpeedTest/plugins/mediaservice"
-                   "BlackmagicRAWSpeedTest/plugins/audio"
-                   "BlackmagicRAWSpeedTest/plugins/xcbglintegrations"
-                   "BlackmagicRAWSpeedTest/plugins/bearer"
-                   "BlackmagicRAWPlayer/BlackmagicRawAPI"
-                   "BlackmagicRAWPlayer/plugins/mediaservice"
-                   "BlackmagicRAWPlayer/plugins/imageformats"
-                   "BlackmagicRAWPlayer/plugins/audio"
-                   "BlackmagicRAWPlayer/plugins/platforms"
-                   "BlackmagicRAWPlayer/plugins/xcbglintegrations"
-                   "BlackmagicRAWPlayer/plugins/bearer"
-                   "Onboarding/plugins/xcbglintegrations"
-                   "Onboarding/plugins/qtwebengine"
-                   "Onboarding/plugins/platforms"
-                   "Onboarding/plugins/imageformats"
-                   "DaVinci Control Panels Setup/plugins/platforms"
-                   "DaVinci Control Panels Setup/plugins/imageformats"
-                   "DaVinci Control Panels Setup/plugins/bearer"
-                   "DaVinci Control Panels Setup/AdminUtility/PlugIns/DaVinciKeyboards"
-                   "DaVinci Control Panels Setup/AdminUtility/PlugIns/DaVinciPanels")
+                  "libs/plugins/sqldrivers"
+                  "libs/plugins/xcbglintegrations"
+                  "libs/plugins/imageformats"
+                  "libs/plugins/platforms"
+                  "libs/Fusion"
+                  "plugins"
+                  "bin"
+                  "BlackmagicRAWSpeedTest/BlackmagicRawAPI"
+                  "BlackmagicRAWSpeedTest/plugins/platforms"
+                  "BlackmagicRAWSpeedTest/plugins/imageformats"
+                  "BlackmagicRAWSpeedTest/plugins/mediaservice"
+                  "BlackmagicRAWSpeedTest/plugins/audio"
+                  "BlackmagicRAWSpeedTest/plugins/xcbglintegrations"
+                  "BlackmagicRAWSpeedTest/plugins/bearer"
+                  "BlackmagicRAWPlayer/BlackmagicRawAPI"
+                  "BlackmagicRAWPlayer/plugins/mediaservice"
+                  "BlackmagicRAWPlayer/plugins/imageformats"
+                  "BlackmagicRAWPlayer/plugins/audio"
+                  "BlackmagicRAWPlayer/plugins/platforms"
+                  "BlackmagicRAWPlayer/plugins/xcbglintegrations"
+                  "BlackmagicRAWPlayer/plugins/bearer"
+                  "Onboarding/plugins/xcbglintegrations"
+                  "Onboarding/plugins/qtwebengine"
+                  "Onboarding/plugins/platforms"
+                  "Onboarding/plugins/imageformats"
+                  "DaVinci Control Panels Setup/plugins/platforms"
+                  "DaVinci Control Panels Setup/plugins/imageformats"
+                  "DaVinci Control Panels Setup/plugins/bearer"
+                  "DaVinci Control Panels Setup/AdminUtility/PlugIns/DaVinciKeyboards"
+                  "DaVinci Control Panels Setup/AdminUtility/PlugIns/DaVinciPanels")
   for _index in "${!_patchelf_paths[@]}"
   do
     _patchelf_paths[${_index}]="/opt/${_pkgname}/${_patchelf_paths[${_index}]}"
@@ -101,8 +102,8 @@ prepare() {
   done < <(find . -type f '(' -name "*.desktop" -o -name "*.directory" -o -name "*.directory" -o -name "*.menu" ')' -print0)
 
   rm "squashfs-root/libs/libglib-2.0.so.0" \
-     "squashfs-root/libs/libgio-2.0.so.0" \
-     "squashfs-root/libs/libgmodule-2.0.so.0"
+      "squashfs-root/libs/libgio-2.0.so.0" \
+      "squashfs-root/libs/libgmodule-2.0.so.0"
   ln -s "../BlackmagicRAWPlayer/BlackmagicRawAPI" "squashfs-root/bin/"
   ln -s /usr/lib/libglib-2.0.so.0 "squashfs-root/libs/libglib-2.0.so.0"
   ln -s /usr/lib/libgio-2.0.so.0 "squashfs-root/libs/libgio-2.0.so.0"
